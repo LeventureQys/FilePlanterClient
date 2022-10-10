@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StudentFileTransferClientClass</class>
+ <widget class="QMainWindow" name="StudentFileTransferClientClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>376</width>
+    <height>185</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>376</width>
+    <height>185</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>376</width>
+    <height>185</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>StudentFileTransferClient</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>11</y>
+      <width>357</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="btn_close">
+       <property name="text">
+        <string>关闭程序</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lab_title">
+       <property name="text">
+        <string>尝试连接中...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="1">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Ip</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="btn_connect">
+         <property name="text">
+          <string>连接</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="line_ip"/>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="line_seat"/>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>座位号</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>本机信息</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>文件保存路径</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="btn_path">
+         <property name="text">
+          <string>选择路径</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="line_path"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="StudentFileTransferClient.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -1,0 +1,16 @@
+﻿  Reading Qt configuration (D:/tool/5.10.1/msvc2015/bin/qmake)
+  uic StudentFileTransferClient.ui
+  rcc StudentFileTransferClient.qrc
+  moc StudentFileTransferClient.h
+  moc LgNetwork\QtTcpClientHandler.h
+   RCC: Warning: No resources in 'D:\Workshop\works\FilePlanterClient\FilePlanterClient\StudentFileTransferClient.qrc'.
+  QtTcpBaseHandler.cpp
+  QtTcpClientHandler.cpp
+  StudentFileTransferClient.cpp
+  main.cpp
+  qrc_StudentFileTransferClient.cpp
+  moc_StudentFileTransferClient.cpp
+  moc_QtTcpClientHandler.cpp
+    正在创建库 D:\Workshop\works\FilePlanterClient\Debug\FilePlanterClient.lib 和对象 D:\Workshop\works\FilePlanterClient\Debug\FilePlanterClient.exp
+  FilePlanterClient.vcxproj -> D:\Workshop\works\FilePlanterClient\Debug\FilePlanterClient.exe
+  FilePlanterClient.vcxproj -> D:\Workshop\works\FilePlanterClient\Debug\FilePlanterClient.pdb (Full PDB)
