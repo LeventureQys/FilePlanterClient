@@ -3,7 +3,7 @@
   rcc StudentFileTransferClient.qrc
   moc StudentFileTransferClient.h
   moc LgNetwork\QtTcpClientHandler.h
-   RCC: Warning: No resources in 'G:\Server\杞瓙\绗笁鏂硅疆瀛怽鏂囦欢閮ㄧ讲宸ュ叿-鏉庢枃杞‐FilePlanterClient\FilePlanterClient\StudentFileTransferClient.qrc'.
+   RCC: Warning: No resources in 'D:\Workshop\works\FilePlanterClient\FilePlanterClient\StudentFileTransferClient.qrc'.
   QtTcpBaseHandler.cpp
   QtTcpClientHandler.cpp
   StudentFileTransferClient.cpp
@@ -11,7 +11,7 @@
   qrc_StudentFileTransferClient.cpp
   moc_StudentFileTransferClient.cpp
   moc_QtTcpClientHandler.cpp
-    正在创建库 G:\Server\轮子\第三方轮子\文件部署工具-李文轩\FilePlanterClient\Release\FilePlanterClient.lib 和对象 G:\Server\轮子\第三方轮子\文件部署工具-李文轩\FilePlanterClient\Release\FilePlanterClient.exp
-qtmain.lib(qtmain_win.obj) : warning LNK4099: 未找到 PDB“qtmain.pdb”(使用“qtmain.lib(qtmain_win.obj)”或在“G:\Server\轮子\第三方轮子\文件部署工具-李文轩\FilePlanterClient\Release\qtmain.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-  FilePlanterClient.vcxproj -> G:\Server\轮子\第三方轮子\文件部署工具-李文轩\FilePlanterClient\Release\FilePlanterClient.exe
-  FilePlanterClient.vcxproj -> G:\Server\轮子\第三方轮子\文件部署工具-李文轩\FilePlanterClient\Release\FilePlanterClient.pdb (Full PDB)
+    正在创建库 D:\Workshop\works\FilePlanterClient\Release\FilePlanterClient.lib 和对象 D:\Workshop\works\FilePlanterClient\Release\FilePlanterClient.exp
+qtmain.lib(qtmain_win.obj) : warning LNK4099: 未找到 PDB“qtmain.pdb”(使用“qtmain.lib(qtmain_win.obj)”或在“D:\Workshop\works\FilePlanterClient\Release\qtmain.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+  FilePlanterClient.vcxproj -> D:\Workshop\works\FilePlanterClient\Release\FilePlanterClient.exe
+  FilePlanterClient.vcxproj -> D:\Workshop\works\FilePlanterClient\Release\FilePlanterClient.pdb (Full PDB)

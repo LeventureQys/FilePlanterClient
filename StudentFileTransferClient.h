@@ -11,8 +11,6 @@
 #include "qmessagebox.h"
 #include "qfiledialog.h"
 #include "qsettings.h"
-#include "qprocess.h"
-#include "qthread.h"
 class FramelessWidget : public QMainWindow
 {
     Q_OBJECT
@@ -27,13 +25,18 @@ private:
     const QByteArray file_title = QByteArray("NewFile");
     QString file_path;
     void FileReceiver(QByteArray strValue);
+	/*******************************
+	* 时间：2021年12月1日
+	* 功能：设置/取消 进程开机自动启动函数
+	* 参数：
+	1、appPath：需要设置/取消的自启动软件的“绝对路径”
+	2、flag：   设置/取消自启动标志位，1为设置，0为取消,默认为设置
+	*******************************/
+	//注册表路径需要使用双反斜杠
+#define AUTO_RUN "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"
 
-	void KillProcess(QString ProcessName);
-	bool IsProcessExist(QString ProcessName);
-
-	const QString local_file = QCoreApplication::applicationDirPath() + "/FileTransfer_Temp/";
-
-	void closeEvent(QCloseEvent* event);
+	void SetProcessAutoRun(const QString &appPath, bool flag);
+	bool isAutoRun(const QString &appPath);
 private slots:
     //点击尝试链接
     void on_btn_connect_clicked();

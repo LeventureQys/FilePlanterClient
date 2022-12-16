@@ -45,20 +45,22 @@ public:
     QHBoxLayout *horizontalLayout;
     QPushButton *btn_path;
     QLineEdit *line_path;
+    QLabel *label_5;
+    QLabel *label_6;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *StudentFileTransferClientClass)
     {
         if (StudentFileTransferClientClass->objectName().isEmpty())
             StudentFileTransferClientClass->setObjectName(QStringLiteral("StudentFileTransferClientClass"));
-        StudentFileTransferClientClass->resize(376, 185);
+        StudentFileTransferClientClass->resize(500, 300);
         StudentFileTransferClientClass->setMinimumSize(QSize(376, 185));
-        StudentFileTransferClientClass->setMaximumSize(QSize(376, 185));
+        StudentFileTransferClientClass->setMaximumSize(QSize(500, 300));
         centralWidget = new QWidget(StudentFileTransferClientClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 11, 357, 151));
+        layoutWidget->setGeometry(QRect(10, 11, 491, 231));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -131,6 +133,12 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
+        label_5 = new QLabel(centralWidget);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(10, 250, 131, 16));
+        label_6 = new QLabel(centralWidget);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(380, 250, 101, 20));
         StudentFileTransferClientClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(StudentFileTransferClientClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -152,6 +160,8 @@ public:
         label_3->setText(QApplication::translate("StudentFileTransferClientClass", "\346\234\254\346\234\272\344\277\241\346\201\257", nullptr));
         label_4->setText(QApplication::translate("StudentFileTransferClientClass", "\346\226\207\344\273\266\344\277\235\345\255\230\350\267\257\345\276\204", nullptr));
         btn_path->setText(QApplication::translate("StudentFileTransferClientClass", "\351\200\211\346\213\251\350\267\257\345\276\204", nullptr));
+        label_5->setText(QApplication::translate("StudentFileTransferClientClass", "Designed by Leventure", nullptr));
+        label_6->setText(QApplication::translate("StudentFileTransferClientClass", "\346\226\207\344\273\266\346\216\245\346\224\266\345\231\250\345\255\246\347\224\237\347\253\257", nullptr));
     } // retranslateUi
 
 };

@@ -16,8 +16,10 @@ FramelessWidget::FramelessWidget(QWidget* parent)
     QSettings settings("File_Receive_Path.ini", QSettings::IniFormat);
     this->ui.line_path->setText(settings.value("File_Path").toString());
     this->file_path = settings.value("File_Path").toString();
-	this->ui.line_ip->setText(settings.value("Ip").toString());
-	this->ui.line_seat->setText(settings.value("Seat").toString());
+    //设置程序自动启动
+	this->SetProcessAutoRun(QApplication::applicationFilePath(), 1);
+
+	this->ui.btn_connect->click();
 }
 FramelessWidget::~FramelessWidget()
 {
@@ -33,19 +35,14 @@ void FramelessWidget::FileReceiver(QByteArray strValue)
     qint32 parse_index;
     QByteArray title_bytes; //名称信息
     QByteArray file_bytes; //文件二进制流
-	QDir temp_dir;
+
     parse_index = strValue.indexOf("|",1);
 	
     title_bytes = strValue.left(parse_index);
     file_title = QString::fromLocal8Bit(title_bytes);
     
-    //file_path = this->file_path +"/"+ file_title;
-	//先缓存，后转移
-	temp_dir.mkdir(this->local_file);
-	file_path = this->local_file + file_title;
-	
-	//要强制结束这个进程来换文件，不然可能就换不了
-	
+    file_path = this->file_path +"/"+ file_title;
+
 	//不管怎么样，只要没占用就得重新写入
     QFile received_file(file_path);   
         file_bytes = strValue.mid(parse_index + 1, -1);
@@ -61,53 +58,38 @@ void FramelessWidget::FileReceiver(QByteArray strValue)
             received_file.open(QIODevice::Truncate | QIODevice::WriteOnly);
             received_file.write(file_bytes, file_bytes.length());
         } 
-	//到此文件应该已经接收完毕了，现在要将本地指定的文件转移到对应位置
-		QFile temp_file(file_path);
-		this->KillProcess(file_title);
-
-		file_path = this->file_path + "/" + file_title;
-		//将指定位置的指定文件移除，再打开
-		QFile::remove(file_path);
-
-		temp_file.copy(file_path);
-
 	//接收文件结束之后需要通知服务端当前文件已接收，同时需要改变置顶的文字提示
 	ui.lab_title->setText(QString("文件%1已接受！").arg(file_path));
 	c_tcp->SendMsg("FILERECIVED");
 }
-void FramelessWidget::KillProcess(QString ProcessName)
+void FramelessWidget::SetProcessAutoRun(const QString & appPath, bool flag)
 {
-	QProcess p;
-	p.start(QString("taskkill /im %1 /f").arg(ProcessName));
-	p.waitForFinished();
+	QSettings settings(AUTO_RUN, QSettings::NativeFormat);
 
-	while (IsProcessExist(ProcessName)) {
-		QThread::msleep(20);
-	}
-}
-bool FramelessWidget::IsProcessExist(QString strExe)
-{
-	bool bResult = false;
-	// 判断进程是否存在
-	QProcess tasklist;
-	tasklist.start("tasklist",
-		QStringList() << "/NH"
-		<< "/FO" << "CSV"
-		<< "/FI" << QString("IMAGENAME eq %1").arg(strExe));
-	tasklist.waitForFinished();
-	QString strOutput = tasklist.readAllStandardOutput();
-	//如果进程存在,则结束进程
-	if (strOutput.startsWith(QString("\"%1").arg(strExe)))
+	//以程序名称作为注册表中的键,根据键获取对应的值（程序路径）
+	QFileInfo fInfo(appPath);
+	QString name = fInfo.baseName();    //键-名称
+
+										//如果注册表中的路径和当前程序路径不一样，则表示没有设置自启动或本自启动程序已经更换了路径
+	QString oldPath = settings.value(name).toString(); //获取目前的值-绝对路劲
+	QString newPath = QDir::toNativeSeparators(appPath);    //toNativeSeparators函数将"/"替换为"\"
+	if (flag)
 	{
-		qInfo() << "check process";
-		bResult = true;
+		if (oldPath != newPath)
+			settings.setValue(name, newPath);
 	}
-	return bResult;
+	else
+		settings.remove(name);
 }
-void FramelessWidget::closeEvent(QCloseEvent * event)
+bool FramelessWidget::isAutoRun(const QString & appPath)
 {
-	QDir temp_dir(this->local_file);
-	temp_dir.removeRecursively();
+	QSettings settings(AUTO_RUN, QSettings::NativeFormat);
+	QFileInfo fInfo(appPath);
+	QString name = fInfo.baseName();
+	QString oldPath = settings.value(name).toString();
+	QString newPath = QDir::toNativeSeparators(appPath);
+	return (settings.contains(name) && newPath == oldPath);
+
 }
 void FramelessWidget::RecvTCP(const QByteArray& bytes)
 {
@@ -136,15 +118,6 @@ void FramelessWidget::Connected(const QString& qsServerAddr, const quint16 nServ
     //链接到服务器
     this->ui.lab_title->setText("链接服务器成功:" + qsServerAddr);
     this->ui.btn_connect->setEnabled(false);
-
-	//链接成功后向教师端发送座位号
-	QString strMessage = QString("%1|%2").arg("NEWCONNECTION").arg(ui.line_seat->text());
-
-	c_tcp->SendMsg(strMessage.toLocal8Bit());
-	QSettings settings("File_Receive_Path.ini", QSettings::IniFormat);
-	if (!this->ui.line_ip->text().isEmpty()) settings.setValue("Ip", this->ui.line_ip->text());
-	if (!this->ui.line_seat->text().isEmpty()) settings.setValue("Seat", this->ui.line_seat->text());
-
 }
 void FramelessWidget::on_btn_path_clicked()
 {
@@ -152,7 +125,8 @@ void FramelessWidget::on_btn_path_clicked()
     srcDirPath = QFileDialog::getExistingDirectory(this, "choose src Directory","/");
     QSettings settings("File_Receive_Path.ini", QSettings::IniFormat);
     settings.setValue("File_Path", srcDirPath);
-	
+	if (!this->ui.line_ip->text().isEmpty()) settings.setValue("Ip", this->ui.line_ip->text());
+	if (!this->ui.line_seat->text().isEmpty()) settings.setValue("Seat", this->ui.line_seat->text());
 	
     this->ui.line_path->setText(srcDirPath);
     this->file_path = srcDirPath;
@@ -186,7 +160,11 @@ void FramelessWidget::on_btn_connect_clicked() {
 		QString temp = ui.line_ip->text();
         c_tcp->Open(ui.line_ip->text(),7777);
 
-       
+        //链接成功后向教师端发送座位号
+        QString strMessage = QString("%1|%2").arg("NEWCONNECTION").arg(ui.line_seat->text());
+
+        c_tcp->SendMsg(strMessage.toLocal8Bit());
+
     }
 }
 #pragma region 无边框
